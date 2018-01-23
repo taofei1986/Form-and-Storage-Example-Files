@@ -21,16 +21,28 @@ function init(){
 	}
 	
 	else{
-	//old bowser	
+	alert("Your browser version is too old, we don't support it!")//old bowser	
 	}
 }
 
 function saveInfo(){
 	var city=document.getElementById("city").value;
 	var comments=document.getElementById("comments").value;
-	
+    var type=document.getElementsByClassName("dounutType");
+    var typeChoice;
+    for(i=0;i<type.length;i++){
+        if(type[i].checked){
+            typeChoice=type[i].value;
+            break;
+        }
+    }
+    var quantity=document.getElementById("quantity").value;
+
 	localStorage.setItem("cityName",city);
 	localStorage.setItem("userComments",comments);
+    localStorage.setItem("typeChoice",typeChoice);
+    localStorage.setItem("quantity",quantity);
+    
 	
 	
 	display();
@@ -41,11 +53,13 @@ function display(){
 	var rightBox=document.getElementById("useroutput");
 	var theCity=localStorage.getItem("cityName");
 	var theComments=localStorage.getItem("userComments");
+    var theTypeChoice=localStorage.getItem("typeChoice");
+    var theQuantity=localStorage.getItem("quantity");
 	
 	if(theComments==undefined){
 		document.getElementById("useroutput").innerHTML="";
 	}
-	else{ document.getElementById("useroutput").innerHTML="OUTPUT  <hr /><br /><br />The City: "+theCity+"<br /><br />  The Weather: "+theComments;
+	else{ document.getElementById("useroutput").innerHTML="OUTPUT  <hr /><br /><br /><img id=\"imageOutput\" src=\"donut_blue.png\" alt=\"Donut\"></imag><br /><br />The City: "+theCity+"<br /><br />  Donut Items (Yum!): "+theComments+"<br /><br />  Donut Type: "+theTypeChoice+"<br /><br />  Quantity: "+theQuantity;
 	}
 	
 }
@@ -60,14 +74,33 @@ function display(){
 
 <div id="main">
 	<section id="userinput">
-    INPUT <br>
+    Choose Your Donut <br>
 	<hr />
     <br /><br />
-    <form>
-    
-    <div>City: <br /><input type="input" id="city" size="20"></div>
+    <form id="form">
+    <img id="imageInput" src="donut.png" alt="Donut"></imag>
+    <div>
+        City: <br />
+        <input type="input" id="city" size="20">
+    </div>
     <br />
-    <div>Weather:<br /> <textarea id="comments" rows="10"></textarea></div>
+    <div>
+        donut items (Yum!):<br /> 
+        <textarea id="comments" rows="10"></textarea>
+    </div>
+    <br />
+    <div>
+        donut type & name:<br />   
+        <input type="radio" class="dounutType" name="dounutType" value="Yeast Doughnuts" checked> Yeast Doughnuts<br>
+        <input type="radio" class="dounutType" name="dounutType" value="Cake Doughnut"> Cake Doughnuts<br>
+        <input type="radio" class="dounutType" name="dounutType" value="Cruller"> Cruller<br>
+        <input type="radio" class="dounutType" name="dounutType" value="Jelly Doughnuts"> Jelly Doughnuts
+    </div>
+    <br />
+    <div>
+        How many do you want?<br />        
+        <input id="quantity" type="number" name="quantity" min="1">
+    </div>
     <br />
      <div><input type="button" id="button" value="Save"></div>
     
